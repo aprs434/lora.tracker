@@ -65,10 +65,10 @@ void setup() {
 #endif
 
   delay(500);
-  logPrintlnI("LoRa APRS Tracker by OE5BPA (Peter Buchegger)");
+  logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("OE5BPA", "LoRa APRS Tracker", "by Peter Buchegger", 2000);
+  show_display("APRS 434", "LoRa Tracker", "Saving bytes on air", 2000);
   load_config();
 
   setup_gps();
@@ -199,7 +199,7 @@ void loop() {
 
     msg.setSource(BeaconMan.getCurrentBeaconConfig()->callsign);
     msg.setPath(BeaconMan.getCurrentBeaconConfig()->path);
-    msg.setDestination("APLT00");
+    msg.setDestination("AP");
 
     if (!BeaconMan.getCurrentBeaconConfig()->enhance_precision) {
       lat = create_lat_aprs(gps.location.rawLat());
@@ -245,20 +245,13 @@ void loop() {
     }
 
     String aprsmsg;
-    aprsmsg = "!" + lat + BeaconMan.getCurrentBeaconConfig()->overlay + lng + BeaconMan.getCurrentBeaconConfig()->symbol + course_and_speed + alt;
+    aprsmsg = "!" + lat + BeaconMan.getCurrentBeaconConfig()->overlay + lng + BeaconMan.getCurrentBeaconConfig()->symbol + course_and_speed;
     // message_text every 10's packet (i.e. if we have beacon rate 1min at high
     // speed -> every 10min). May be enforced above (at expirey of smart beacon
     // rate (i.e. every 30min), or every third packet on static rate (i.e.
     // static rate 10 -> every third packet)
     if (!(rate_limit_message_text++ % 10)) {
       aprsmsg += BeaconMan.getCurrentBeaconConfig()->message;
-    }
-    if (BatteryIsConnected) {
-      aprsmsg += " -  _Bat.: " + batteryVoltage + "V - Cur.: " + batteryChargeCurrent + "mA";
-    }
-
-    if (BeaconMan.getCurrentBeaconConfig()->enhance_precision) {
-      aprsmsg += " " + dao;
     }
 
     msg.getAPRSBody()->setData(aprsmsg);
@@ -417,18 +410,8 @@ String create_lat_aprs(RawDegrees lat) {
 }
 
 String create_lat_aprs_dao(RawDegrees lat) {
-  // round to 4 digits and cut the last 2
-  char str[20];
-  char n_s = 'N';
-  if (lat.negative) {
-    n_s = 'S';
-  }
-  // we need sprintf's float up-rounding. Must be the same principle as in
-  // aprs_dao(). We cut off the string to two decimals afterwards. but sprintf %
-  // may round to 60.0000 -> 5360.0000 (53° 60min is a wrong notation ;)
-  sprintf(str, "%02d%s%c", lat.deg, s_min_nn(lat.billionths, 1 /* high precision */), n_s);
-  String lat_str(str);
-  return lat_str;
+  // DEPRECIATED: Consumes too many bytes!
+  return create_lat_aprs(RawDegrees lat);
 }
 
 String create_long_aprs(RawDegrees lng) {
@@ -443,24 +426,12 @@ String create_long_aprs(RawDegrees lng) {
 }
 
 String create_long_aprs_dao(RawDegrees lng) {
-  // round to 4 digits and cut the last 2
-  char str[20];
-  char e_w = 'E';
-  if (lng.negative) {
-    e_w = 'W';
-  }
-  sprintf(str, "%03d%s%c", lng.deg, s_min_nn(lng.billionths, 1 /* high precision */), e_w);
-  String lng_str(str);
-  return lng_str;
+  // DEPRECIATED: Consumes too many bytes!
+  return create_long_aprs(RawDegrees lng);
 }
 
 String create_dao_aprs(RawDegrees lat, RawDegrees lng) {
-  // !DAO! extension, use Base91 format for best precision
-  // /1.1 : scale from 0-99 to 0-90 for base91, int(... + 0.5): round to nearest
-  // integer https://metacpan.org/dist/Ham-APRS-FAP/source/FAP.pm
-  // http://www.aprs.org/aprs12/datum.txt
-  //
-
+  // DEPRECIATED: Consumes too many bytes!
   char str[10];
   sprintf(str, "!w%s", s_min_nn(lat.billionths, 2));
   sprintf(str + 3, "%s!", s_min_nn(lng.billionths, 2));
