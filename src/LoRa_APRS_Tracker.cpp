@@ -195,20 +195,13 @@ void loop() {
     APRSMessage msg;
     String      lat;
     String      lng;
-    String      dao;
 
     msg.setSource(BeaconMan.getCurrentBeaconConfig()->callsign);
     msg.setPath(BeaconMan.getCurrentBeaconConfig()->path);
     msg.setDestination("AP");
 
-    if (!BeaconMan.getCurrentBeaconConfig()->enhance_precision) {
-      lat = create_lat_aprs(gps.location.rawLat());
-      lng = create_long_aprs(gps.location.rawLng());
-    } else {
-      lat = create_lat_aprs_dao(gps.location.rawLat());
-      lng = create_long_aprs_dao(gps.location.rawLng());
-      dao = create_dao_aprs(gps.location.rawLat(), gps.location.rawLng());
-    }
+    lat = create_lat_aprs(gps.location.rawLat());
+    lng = create_long_aprs(gps.location.rawLng());
 
     String alt     = "";
     int    alt_int = max(-99999, min(999999, (int)gps.altitude.feet()));
@@ -409,11 +402,6 @@ String create_lat_aprs(RawDegrees lat) {
   return lat_str;
 }
 
-String create_lat_aprs_dao(RawDegrees lat) {
-  // DEPRECIATED: Consumes too many bytes!
-  return;
-}
-
 String create_long_aprs(RawDegrees lng) {
   char str[20];
   char e_w = 'E';
@@ -423,20 +411,6 @@ String create_long_aprs(RawDegrees lng) {
   sprintf(str, "%03d%s%c", lng.deg, s_min_nn(lng.billionths, 0), e_w);
   String lng_str(str);
   return lng_str;
-}
-
-String create_long_aprs_dao(RawDegrees lng) {
-  // DEPRECIATED: Consumes too many bytes!
-  return;
-}
-
-String create_dao_aprs(RawDegrees lat, RawDegrees lng) {
-  // DEPRECIATED: Consumes too many bytes!
-  char str[10];
-  sprintf(str, "!w%s", s_min_nn(lat.billionths, 2));
-  sprintf(str + 3, "%s!", s_min_nn(lng.billionths, 2));
-  String dao_str(str);
-  return dao_str;
 }
 
 String createDateString(time_t t) {
