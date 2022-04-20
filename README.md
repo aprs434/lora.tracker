@@ -1,11 +1,23 @@
-# APRS 434: Extend your LoRa range by saving bytes.
+# APRS 434: Extends your LoRa range by saving bytes.
+Welcome to the home of **APRS 434 tracker**, the 434 MHz LoRa APRS amateur radio GPS tracker that **extends range by saving bytes.**
+
+Unlike other ham radio LoRa APRS trackers, this tracker aims at **deploying LoRa the way it was intended;** namely by being frugal about the number of bytes put on air. Doing so, results in a number of benefits:
+
+- Increased battery life,
+- Higher chances of good packet reception,
+- Hence, increased range,
+- Lower probability of packet collisions,
+- Therefore, more channel capacity.
+
+To [learn more](https://aprs434.github.io) about APRS 434 data link compression, visit [aprs434.github.io](https://aprs434.github.io).
+
+
+## Supported boards
 The LoRa APRS Tracker will work with very cheep hardware which you can buy from Amazon, eBay or Aliexpress.
 Try it out and be part of the APRS network.
 
 ![TTGO T-Beam](pics/Tracker.png)
 
-
-## Supported boards
 You can use one of the Lora32 boards:
 
 - TTGO T-Beam V0.7 (433MHz SX1278)
