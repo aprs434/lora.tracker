@@ -411,7 +411,7 @@ String create_lat_aprs(RawDegrees lat) {
 
 String create_lat_aprs_dao(RawDegrees lat) {
   // DEPRECIATED: Consumes too many bytes!
-  return create_lat_aprs(RawDegrees lat);
+  return;
 }
 
 String create_long_aprs(RawDegrees lng) {
@@ -427,7 +427,7 @@ String create_long_aprs(RawDegrees lng) {
 
 String create_long_aprs_dao(RawDegrees lng) {
   // DEPRECIATED: Consumes too many bytes!
-  return create_long_aprs(RawDegrees lng);
+  return;
 }
 
 String create_dao_aprs(RawDegrees lat, RawDegrees lng) {
