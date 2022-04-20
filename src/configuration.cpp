@@ -42,10 +42,7 @@ Configuration ConfigurationManagement::readConfiguration() {
 
     if (v.containsKey("callsign"))
       beacon.callsign = v["callsign"].as<String>();
-    if (v.containsKey("path"))
-      beacon.path = v["path"].as<String>();
-    if (v.containsKey("message"))
-      beacon.message = v["message"].as<String>();
+      beacon.path = "";
     beacon.timeout = v["timeout"] | 1;
     if (v.containsKey("symbol"))
       beacon.symbol = v["symbol"].as<String>();
@@ -60,8 +57,6 @@ Configuration ConfigurationManagement::readConfiguration() {
     beacon.smart_beacon.fast_speed  = v["smart_beacon"]["fast_speed"] | 100;
     beacon.smart_beacon.min_tx_dist = v["smart_beacon"]["min_tx_dist"] | 100;
     beacon.smart_beacon.min_bcn     = v["smart_beacon"]["min_bcn"] | 5;
-
-    beacon.enhance_precision = v["enhance_precision"] | false;
 
     conf.beacons.push_back(beacon);
   }
@@ -99,7 +94,6 @@ void ConfigurationManagement::writeConfiguration(Configuration conf) {
     JsonObject v  = beacons.createNestedObject();
     v["callsign"] = beacon.callsign;
     v["path"]     = beacon.path;
-    v["message"]  = beacon.message;
     v["timeout"]  = beacon.timeout;
     v["symbol"]   = beacon.symbol;
     v["overlay"]  = beacon.overlay;
@@ -112,8 +106,6 @@ void ConfigurationManagement::writeConfiguration(Configuration conf) {
     v["smart_beacon"]["fast_speed"]  = beacon.smart_beacon.fast_speed;
     v["smart_beacon"]["min_tx_dist"] = beacon.smart_beacon.min_tx_dist;
     v["smart_beacon"]["min_bcn"]     = beacon.smart_beacon.min_bcn;
-
-    v["enhance_precision"] = beacon.enhance_precision;
   }
 
   data["debug"] = conf.debug;

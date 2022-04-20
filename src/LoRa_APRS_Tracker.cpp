@@ -28,9 +28,6 @@ void setup_gps();
 
 String create_lat_aprs(RawDegrees lat);
 String create_long_aprs(RawDegrees lng);
-String create_lat_aprs_dao(RawDegrees lat);
-String create_long_aprs_dao(RawDegrees lng);
-String create_dao_aprs(RawDegrees lat, RawDegrees lng);
 String createDateString(time_t t);
 String createTimeString(time_t t);
 String getSmartBeaconState();
@@ -44,7 +41,7 @@ static void handle_tx_click() {
 
 static void handle_next_beacon() {
   BeaconMan.loadNextBeacon();
-  show_display(BeaconMan.getCurrentBeaconConfig()->callsign, BeaconMan.getCurrentBeaconConfig()->message, 2000);
+  show_display(BeaconMan.getCurrentBeaconConfig()->callsign, 2000);
 }
 
 // cppcheck-suppress unusedFunction
@@ -68,7 +65,7 @@ void setup() {
   logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker", "Saving bytes on air", 2000);
+  show_display("APRS 434", "LoRa Tracker v0.2", "Saving bytes on air", 2000);
   load_config();
 
   setup_gps();
@@ -239,13 +236,6 @@ void loop() {
 
     String aprsmsg;
     aprsmsg = "!" + lat + BeaconMan.getCurrentBeaconConfig()->overlay + lng + BeaconMan.getCurrentBeaconConfig()->symbol + course_and_speed;
-    // message_text every 10's packet (i.e. if we have beacon rate 1min at high
-    // speed -> every 10min). May be enforced above (at expirey of smart beacon
-    // rate (i.e. every 30min), or every third packet on static rate (i.e.
-    // static rate 10 -> every third packet)
-    if (!(rate_limit_message_text++ % 10)) {
-      aprsmsg += BeaconMan.getCurrentBeaconConfig()->message;
-    }
 
     msg.getAPRSBody()->setData(aprsmsg);
     String data = msg.encode();

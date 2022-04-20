@@ -3,8 +3,6 @@
     "beacons": [
         {
             "callsign": "NOCALL-12",
-            "path": "",
-            "message": "",
             "timeout": 1,
             "symbol": "[",
             "overlay": "/",
@@ -17,8 +15,7 @@
                 "fast_speed": 100,
                 "min_tx_dist": 100,
                 "min_bcn": 5
-            },
-            "enhance_precision": false
+            }
         }
     ],
     "button": {
