@@ -26,8 +26,7 @@ void load_config();
 void setup_lora();
 void setup_gps();
 
-String create_lat_aprs(RawDegrees lat);
-String create_long_aprs(RawDegrees lng);
+char *ax25_base91enc(char *s, uint8_t n, uint32_t v);
 String createDateString(time_t t);
 String createTimeString(time_t t);
 String getSmartBeaconState();
@@ -65,7 +64,7 @@ void setup() {
   logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker v0.21", "Saving bytes on air", 2000);
+  show_display("APRS 434", "LoRa Tracker v0.3", "Less bytes, more range", 2000);
   load_config();
 
   setup_gps();
@@ -190,36 +189,59 @@ void loop() {
     nextBeaconTimeStamp = now() + (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active ? BeaconMan.getCurrentBeaconConfig()->smart_beacon.slow_rate : (BeaconMan.getCurrentBeaconConfig()->timeout * SECS_PER_MIN));
 
     APRSMessage msg;
-    String      lat;
-    String      lng;
-
     msg.setSource(BeaconMan.getCurrentBeaconConfig()->callsign);
     msg.setPath(BeaconMan.getCurrentBeaconConfig()->path);
     msg.setDestination("AP");
 
-    lat = create_lat_aprs(gps.location.rawLat());
-    lng = create_long_aprs(gps.location.rawLng());
+    float Tlat, Tlon;
+    float Tspeed=0, Tcourse=0;
+    Tlat    = gps.location.lat();
+    Tlon    = gps.location.lng();
+    Tcourse = gps.course.deg();
+    Tspeed  = gps.speed.knots();
 
-    String alt     = "";
-    int    alt_int = max(-99999, min(999999, (int)gps.altitude.feet()));
-    if (alt_int < 0) {
-      alt = "/A=-" + padding(alt_int * -1, 5);
-    } else {
-      alt = "/A=" + padding(alt_int, 6);
-    }
+    uint32_t aprs_lat, aprs_lon;
+    aprs_lat = 900000000 - Tlat * 10000000;
+    aprs_lat = aprs_lat / 26 - aprs_lat / 2710 + aprs_lat / 15384615;
+    aprs_lon = 900000000 + Tlon * 10000000 / 2;
+    aprs_lon = aprs_lon / 26 - aprs_lon / 2710 + aprs_lon / 15384615;
 
-    String course_and_speed = "";
-    int    speed_int        = max(0, min(999, (int)gps.speed.knots()));
-    if (speed_zero_sent < 3) {
-      String speed      = padding(speed_int, 3);
-      int    course_int = max(0, min(360, (int)gps.course.deg()));
-      /* course in between 1..360 due to aprs spec */
-      if (course_int == 0) {
-        course_int = 360;
-      }
-      String course    = padding(course_int, 3);
-      course_and_speed = course + "/" + speed;
+    String Ns, Ew, helper;
+    if(Tlat<0) { Ns = "S"; } else { Ns = "N"; }
+    if(Tlat < 0) { Tlat= -Tlat; }
+    unsigned int Deg_Lat = Tlat;
+    float Lat;
+    Lat = 100*(Deg_Lat) + (Tlat - Deg_Lat)*60;
+
+    if(Tlon<0) { Ew = "W"; } else { Ew = "E"; }
+    if(Tlon < 0) { Tlon= -Tlon; }
+    unsigned int Deg_Lon = Tlon;
+    float Lon;
+    Lon = 100*(Deg_Lon) + (Tlon - Deg_Lon)*60;
+
+    String infoField = "!";    // Data Type ID
+    infoField += BeaconMan.getCurrentBeaconConfig()->overlay;
+
+    char helper_base91[] = {"0000\0"};
+    int i;
+    ax25_base91enc(helper_base91, 4, aprs_lat);
+    for (i=0; i<4; i++) {
+      infoField += helper_base91[i];
     }
+    ax25_base91enc(helper_base91, 4, aprs_lon);
+    for (i=0; i<4; i++) {
+      infoField += helper_base91[i];
+    }
+    
+    infoField += BeaconMan.getCurrentBeaconConfig()->symbol;
+
+    ax25_base91enc(helper_base91, 1, (uint32_t) Tcourse/4 );
+    infoField += helper_base91[0];
+    ax25_base91enc(helper_base91, 1, (uint32_t) (log1p(Tspeed)/0.07696));
+    infoField += helper_base91[0];
+    infoField += "\x47";    // Compression Type (T) Byte = \b001 00 110 = 38; 38 + 33 = 72 = \x47 = G
+
+    int speed_int = max(0, min(999, (int)gps.speed.knots()));
     if (speed_int == 0) {
       /* speed is 0.
          we send 3 packets with speed zero (so our friends know we stand still).
@@ -234,10 +256,7 @@ void loop() {
       speed_zero_sent = 0;
     }
 
-    String aprsmsg;
-    aprsmsg = "!" + lat + BeaconMan.getCurrentBeaconConfig()->overlay + lng + BeaconMan.getCurrentBeaconConfig()->symbol + course_and_speed;
-
-    msg.getAPRSBody()->setData(aprsmsg);
+    msg.getAPRSBody()->setData(infoField);
     String data = msg.encode();
     logPrintlnD(data);
     show_display("<< TX >>", data);
@@ -247,8 +266,7 @@ void loop() {
       delay(Config.ptt.start_delay);
     }
 
-    LoRa.beginPacket();
-    // Header:
+    LoRa.beginPacket();    // Explicit LoRa Header:
     LoRa.write('<');
     LoRa.write(0xFF);
     LoRa.write(0x01);
@@ -304,6 +322,10 @@ void loop() {
   }
 }
 
+
+/// FUNCTIONS ///
+
+
 void load_config() {
   ConfigurationManagement confmg("/tracker.json");
   Config = confmg.readConfiguration();
@@ -347,46 +369,18 @@ void setup_gps() {
   ss.begin(9600, SERIAL_8N1, GPS_TX, GPS_RX);
 }
 
-char *s_min_nn(uint32_t min_nnnnn) {
-  /* min_nnnnn: RawDegrees billionths is uint32_t by definition and is n'telth
-   * degree (-> *= 6 -> nn.mmmmmm minutes) Round to decimal position 2.
-   */
+char *ax25_base91enc(char *s, uint8_t n, uint32_t v)
+{
+  /* Creates a Base-91 representation of the value in v in the string */
+  /* pointed to by s, n-characters long. String length should be n+1. */
 
-  static char buf[6];
-  min_nnnnn = min_nnnnn * 0.006;
-
-  // round up. Avoid overflow (59.9999 should never become 60.0 or more)
-  if ((min_nnnnn % 1000) >= 500 && min_nnnnn < (6000000 - 500)) {
-    min_nnnnn = min_nnnnn + 500;
+  for(s += n, *s = '\0'; n; n--)
+  {
+    *(--s) = v % 91 + 33;
+    v /= 91;
   }
 
-  sprintf(buf, "%02u.%02u", (unsigned int)((min_nnnnn / 100000) % 100), (unsigned int)((min_nnnnn / 1000) % 100));
-  return buf;
-}
-
-String create_lat_aprs(RawDegrees lat) {
-  char str[20];
-  char n_s = 'N';
-  if (lat.negative) {
-    n_s = 'S';
-  }
-  // we like sprintf's float up-rounding.
-  // but sprintf % may round to 60.00 -> 5360.00 (53° 60min is a wrong notation
-  // ;)
-  sprintf(str, "%02d%s%c", lat.deg, s_min_nn(lat.billionths), n_s);
-  String lat_str(str);
-  return lat_str;
-}
-
-String create_long_aprs(RawDegrees lng) {
-  char str[20];
-  char e_w = 'E';
-  if (lng.negative) {
-    e_w = 'W';
-  }
-  sprintf(str, "%03d%s%c", lng.deg, s_min_nn(lng.billionths), e_w);
-  String lng_str(str);
-  return lng_str;
+  return(s);
 }
 
 String createDateString(time_t t) {
