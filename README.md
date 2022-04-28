@@ -25,8 +25,10 @@ Supported 433 MHz LoRa GPS tracker hardware:
 
 
 ## Firmware Compilation and Configuration
-- [German quick start guide](https://www.lora-aprs.info/docs/LoRa_APRS_iGate/quick-start-guide/)
-- [French quick start guide](http://www.f5kmy.fr/spip.php?article509)
+
+### Quick Start Guides
+- [German](https://www.lora-aprs.info/docs/LoRa_APRS_iGate/quick-start-guide/)
+- [French](http://www.f5kmy.fr/spip.php?article509)
 
 ### Compilation
 The best success is to use PlatformIO (and it is the only platform where I can support you). 
