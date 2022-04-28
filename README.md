@@ -1,4 +1,4 @@
-# APRS 434: Extends your LoRa range by saving bytes.
+# APRS 434 — Extend your LoRa range by saving bytes.
 Welcome to the home of **APRS 434 tracker**, the 434 MHz LoRa APRS amateur radio GPS tracker that **extends range by saving bytes.**
 
 Unlike other ham radio LoRa APRS trackers, this tracker aims at **deploying LoRa the way it was intended;** namely by being frugal about the number of bytes put on air. Doing so, results in a number of benefits:
