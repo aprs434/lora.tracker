@@ -64,7 +64,7 @@ void setup() {
   logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker v0.3", "Less bytes, more range", 2000);
+  show_display("APRS 434", "LoRa Tracker v0.3", "Less bytes,", "more range", 2000);
   load_config();
 
   setup_gps();
