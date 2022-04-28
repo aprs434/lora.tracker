@@ -46,4 +46,6 @@ The best success is to use PlatformIO (and it is the only platform where I can s
 
 
 ## LoRa i-Gate
-Currently, the APRS&nbsp;434 tracker is still compatible with the [i-gate developped by Peter Buchegger, OE5BPA](https://github.com/lora-aprs/LoRa_APRS_iGate). However, this will soon change as more LoRa frame compression is added.
+⚠ Currently, the APRS&nbsp;434 tracker is still compatible with the [i-gate developped by Peter Buchegger, OE5BPA](https://github.com/lora-aprs/LoRa_APRS_iGate). However, this will soon change as more LoRa frame compression is added.
+We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, an i‑gate capable of understanding both formats (APRS&nbsp;434&nbsp;and OE5BPA) will be developed.
+
