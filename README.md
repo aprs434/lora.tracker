@@ -9,39 +9,32 @@ Unlike other ham radio LoRa APRS trackers, this tracker aims at **deploying LoRa
 - Lower probability of packet collisions,
 - Therefore, more channel capacity.
 
-To [learn more](https://aprs434.github.io) about APRS 434 data link compression, visit [aprs434.github.io](https://aprs434.github.io).
+To [**learn more**](https://aprs434.github.io) about APRS 434 data link compression, visit [aprs434.github.io](https://aprs434.github.io).
 
 
-## Supported boards
-The LoRa APRS Tracker will work with very cheep hardware which you can buy from Amazon, eBay or Aliexpress.
-Try it out and be part of the APRS network.
+## Supported Tracker Hardware
+The **APRS 434** LoRa tracker firmware is developed for the relatively cheap Espressif ESP32-based LoRa GPS trackers made by TTGO. These are available from Aliexpress, Amazon or eBay.
+
+Supported 433 MHz LoRa GPS tracker hardware:
+- TTGO T-Beam V0.7 433 MHz SX1278
+- TTGO T-Beam V1 433 MHz SX1278
+
+⚠ Please, make sure to **order a 433 MHz version!**
 
 ![TTGO T-Beam](pics/Tracker.png)
 
-You can use one of the Lora32 boards:
 
-- TTGO T-Beam V0.7 (433MHz SX1278)
-- TTGO T-Beam V1 (433MHz SX1278)
+## Firmware Compilation and Configuration
+- [German quick start guide](https://www.lora-aprs.info/docs/LoRa_APRS_iGate/quick-start-guide/)
+- [French quick start guide](http://www.f5kmy.fr/spip.php?article509)
 
-This boards cost around 30 Euros, they are very cheap but perfect for an LoRa iGate.
-Keep in minde: you need a 433MHz version!
-
-
-## Compiling and configuration
-
-**There is a German [quick start](https://www.lora-aprs.info/docs/LoRa_APRS_iGate/quick-start-guide/) page! Take a look ;)**
-
-**There is a French [quick start](http://www.f5kmy.fr/spip.php?article509) page! Take a look ;)**
-
-### How to compile
-
+### Compilation
 The best success is to use PlatformIO (and it is the only platform where I can support you). 
 
 - Go to [PlatformIO](https://platformio.org/) download and install the IDE. 
 - If installed open the IDE, go to the left side and klick on 'extensions' then search for 'PatformIO' and install.
 - When installed click 'the ant head' on the left and choose import the project on the right.
 - Just open the folder and you can compile the Firmware.
-
 
 ### Configuration
 - You can find all nessesary settings to change for your configuration in **data/tracker.json**.
