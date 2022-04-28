@@ -50,5 +50,5 @@ The best success is to use PlatformIO (and it is the only platform where I can s
 - To find the 'Upload File System image' click the PlatformIO symbol (the little alien) on the left side, choos your configuration, click on 'Platform' and search for 'Upload File System image'.
 
 
-## LoRa iGate
-Look at my other project: a [LoRa iGate](https://github.com/peterus/LoRa_APRS_iGate)
+## LoRa i-Gate
+Currently, the APRS&nbsp;434 tracker is still compatible with the [i-gate developped by Peter Buchegger, OE5BPA](https://github.com/lora-aprs/LoRa_APRS_iGate). However, this will soon change as more LoRa frame compression is added.
