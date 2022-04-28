@@ -19,7 +19,7 @@ Supported 433 MHz LoRa GPS tracker hardware:
 - TTGO T-Beam V0.7 433 MHz SX1278
 - TTGO T-Beam V1 433 MHz SX1278
 
-⚠ Please, make sure to **order a 433 MHz version!**
+> ⚠ Please, make sure to order a 433 MHz version!
 
 ![TTGO T-Beam](pics/Tracker.png)
 
