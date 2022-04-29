@@ -209,15 +209,9 @@ void loop() {
     String Ns, Ew, helper;
     if(Tlat < 0) { Ns = "S"; } else { Ns = "N"; }
     if(Tlat < 0) { Tlat= -Tlat; }
-    unsigned int Deg_Lat = Tlat;
-    float Lat;
-    Lat = 100*(Deg_Lat) + (Tlat - Deg_Lat)*60;
 
     if(Tlon < 0) { Ew = "W"; } else { Ew = "E"; }
     if(Tlon < 0) { Tlon= -Tlon; }
-    unsigned int Deg_Lon = Tlon;
-    float Lon;
-    Lon = 100*(Deg_Lon) + (Tlon - Deg_Lon)*60;
 
     String infoField = "!";    // Data Type ID
     infoField += BeaconMan.getCurrentBeaconConfig()->overlay;
