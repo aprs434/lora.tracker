@@ -16,8 +16,8 @@ To [**learn more**](https://aprs434.github.io) about APRS 434 data link compress
 The **APRS 434** LoRa tracker firmware is developed for the relatively cheap Espressif ESP32-based LoRa GPS trackers made by TTGO. These are available from Aliexpress, Amazon or eBay.
 
 Supported 433 MHz LoRa GPS tracker hardware:
-- TTGO T-Beam V0.7 433 MHz SX1278
-- TTGO T-Beam V1 433 MHz SX1278
+- TTGO T-Beam v0.7 433 MHz SX1278
+- TTGO T-Beam v1 433 MHz SX1278
 
 > ⚠ Please, make sure to order a 433 MHz version!
 
