@@ -64,7 +64,7 @@ void setup() {
   logPrintlnI("APRS 434 LoRa Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker", "v0.31", "", "LESS BYTES,", "MORE RANGE", 2000);
+  show_display("APRS 434", "LoRa Tracker", "v0.4", "", "LESS BYTES,", "MORE RANGE", 2000);
   load_config();
 
   setup_gps();
@@ -250,7 +250,7 @@ void loop() {
       speed_zero_sent = 0;
     }
 
-    msg.getAPRSBody()->setData(infoField);
+    msg.getBody()->setData(infoField);
     String data = msg.encode();
     logPrintlnD(data);
     show_display(" << TX >>", data);
