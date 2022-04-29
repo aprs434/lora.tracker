@@ -78,7 +78,7 @@ However, it is strongly advised to already install [**the accompanying APRS&nbsp
 
 |tracker<br/>firmware|completed|feature|
 |:------------------:|:-------:|:-----:|
-|||coordinates displayed on screen|
+|v0.31|✓|coordinates displayed on screen|
 |||reduced power consumption through [SH1106 OLED sleep](https://bengoncalves.wordpress.com/2015/10/01/oled-display-and-arduino-with-power-save-mode/)|
 |||button press to activate OLED screen|
 |||ESP32 power reduction|
