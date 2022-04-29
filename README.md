@@ -56,10 +56,10 @@ We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa 
 
 |tracker<br/>firmware|completed|feature|LoRa payload|compatible with [OE5BPA i‑gate](https://github.com/lora-aprs/LoRa_APRS_iGate)|
 |:------------------:|:-------:|:-----:|:----------:|:--------------------------------------------------------------------------------:|
-|v0.0|✓|original [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker)|114 bytes|✓|
-|v0.1|✓|byte-saving [`tracker.json`](https://github.com/aprs434/lora.tracker/blob/master/data/tracker.json)|88 bytes|✓|
-|v0.2|✓|fork of the [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker) with significantly less transmitted bytes|45 bytes|✓|
-|v0.3|✓|[Base91](https://en.wikipedia.org/wiki/List_of_numeral_systems#Standard_positional_numeral_systems) compression of the location, course and speed data|32 bytes|✓|
+|v0.0|✓|original [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker)|113 bytes|✓|
+|v0.1|✓|byte-saving [`tracker.json`](https://github.com/aprs434/lora.tracker/blob/master/data/tracker.json)|87 bytes|✓|
+|v0.2|✓|fork of the [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker) with significantly less transmitted bytes|44 bytes|✓|
+|v0.3|✓|[Base91](https://en.wikipedia.org/wiki/List_of_numeral_systems#Standard_positional_numeral_systems) compression of the location, course and speed data|31 bytes|✓|
 |||random time jitter between fixed interval packets to avoid repetitive [collisions](https://en.wikipedia.org/wiki/Collision_domain)|30 bytes|✓|
 |||tracker and i-gate with frame address compression,<br/>no custom header in payload|20 bytes|✗|
 
