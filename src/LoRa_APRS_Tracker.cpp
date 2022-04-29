@@ -259,7 +259,7 @@ void loop() {
     msg.getAPRSBody()->setData(infoField);
     String data = msg.encode();
     logPrintlnD(data);
-    show_display("<< TX >>", data);
+    show_display(" << TX >>", data);
 
     if (Config.ptt.active) {
       digitalWrite(Config.ptt.io_pin, Config.ptt.reverse ? LOW : HIGH);
