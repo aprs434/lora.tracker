@@ -266,7 +266,8 @@ void loop() {
       delay(Config.ptt.start_delay);
     }
 
-    LoRa.beginPacket();    // Explicit LoRa Header:
+    LoRa.beginPacket();    // Explicit LoRa Header
+    // Custom LoRa Header:
     LoRa.write('<');
     LoRa.write(0xFF);
     LoRa.write(0x01);
