@@ -64,7 +64,7 @@ void setup() {
   logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker v0.3", "Less bytes,", "more range", 2000);
+  show_display("APRS 434", "LoRa Tracker v0.31", "", "Less bytes,", "more range", 2000);
   load_config();
 
   setup_gps();
@@ -207,13 +207,13 @@ void loop() {
     aprs_lon = aprs_lon / 26 - aprs_lon / 2710 + aprs_lon / 15384615;
 
     String Ns, Ew, helper;
-    if(Tlat<0) { Ns = "S"; } else { Ns = "N"; }
+    if(Tlat < 0) { Ns = "S"; } else { Ns = "N"; }
     if(Tlat < 0) { Tlat= -Tlat; }
     unsigned int Deg_Lat = Tlat;
     float Lat;
     Lat = 100*(Deg_Lat) + (Tlat - Deg_Lat)*60;
 
-    if(Tlon<0) { Ew = "W"; } else { Ew = "E"; }
+    if(Tlon < 0) { Ew = "W"; } else { Ew = "E"; }
     if(Tlon < 0) { Tlon= -Tlon; }
     unsigned int Deg_Lon = Tlon;
     float Lon;
@@ -291,7 +291,11 @@ void loop() {
 
   if (gps_time_update) {
 
-    show_display(BeaconMan.getCurrentBeaconConfig()->callsign, createDateString(now()) + " " + createTimeString(now()), String("Sats: ") + gps.satellites.value() + " HDOP: " + gps.hdop.hdop(), String("Nxt Bcn: ") + (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active ? "~" : "") + createTimeString(nextBeaconTimeStamp), BatteryIsConnected ? (String("Bat: ") + batteryVoltage + "V, " + batteryChargeCurrent + "mA") : "Powered via USB", String("Smart Beacon: " + getSmartBeaconState()));
+    show_display(BeaconMan.getCurrentBeaconConfig()->callsign, createDateString(now()) + " " + createTimeString(now()),
+                 String("Next TX:   ") + (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active ? "~" : "") + createTimeString(nextBeaconTimeStamp),
+                 String("Sats: ") + gps.satellites.value() + " HDOP: " + gps.hdop.hdop(),
+                 String(""),
+                 String("Smart Beacon: " + getSmartBeaconState()));
 
     if (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active) {
       // Change the Tx internal based on the current speed
