@@ -61,7 +61,7 @@ void setup() {
 #endif
 
   delay(500);
-  logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
+  logPrintlnI("APRS 434 LoRa Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
   show_display("APRS 434", "LoRa Tracker", "v0.31", "", "LESS BYTES,", "MORE RANGE", 2000);
