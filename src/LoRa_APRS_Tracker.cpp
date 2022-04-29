@@ -64,7 +64,7 @@ void setup() {
   logPrintlnI("LoRa APRS Tracker by Serge Y. Stroobandt, ON4AA");
   setup_display();
 
-  show_display("APRS 434", "LoRa Tracker v0.31", "", "Less bytes,", "more range", 2000);
+  show_display("APRS 434", "LoRa Tracker", "v0.31", "", "LESS BYTES,", "MORE RANGE", 2000);
   load_config();
 
   setup_gps();
@@ -294,7 +294,7 @@ void loop() {
     show_display(BeaconMan.getCurrentBeaconConfig()->callsign, createDateString(now()) + " " + createTimeString(now()),
                  String("Next TX:   ") + (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active ? "~" : "") + createTimeString(nextBeaconTimeStamp),
                  String("Sats: ") + gps.satellites.value() + " HDOP: " + gps.hdop.hdop(),
-                 String(""),
+                 String("") + gps.location.lat() + " " + gps.location.lng(),
                  String("Smart Beacon: " + getSmartBeaconState()));
 
     if (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active) {
@@ -389,11 +389,11 @@ char *ax25_base91enc(char *s, uint8_t n, uint32_t v)
 }
 
 String createDateString(time_t t) {
-  return String(padding(day(t), 2) + "." + padding(month(t), 2) + "." + padding(year(t), 4));
+  return String(padding(year(t), 4) + "-" + padding(month(t), 2) + "-" + padding(day(t), 2));
 }
 
 String createTimeString(time_t t) {
-  return String(padding(hour(t), 2) + "." + padding(minute(t), 2) + "." + padding(second(t), 2));
+  return String(padding(hour(t), 2) + ":" + padding(minute(t), 2) + ":" + padding(second(t), 2));
 }
 
 String getSmartBeaconState() {
