@@ -46,25 +46,33 @@ The best success is to use PlatformIO (and it is the only platform where I can s
 
 
 ## LoRa APRS i-Gate
-⚠ Currently, the APRS&nbsp;434 tracker is still compatible with the [i-gate developed by Peter Buchegger, OE5BPA](https://github.com/lora-aprs/LoRa_APRS_iGate). However, this will soon change as more LoRa frame compression is added.
-We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, an i‑gate capable of understanding both formats (APRS&nbsp;434&nbsp;and OE5BPA) will be developed.
+Currently, the APRS&nbsp;434 tracker is still compatible with the i-gate developed by Peter Buchegger, OE5BPA. However, this will soon change as more LoRa frame compression is added.
+
+We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, we are developing an i‑gate capable of understanding both formats; i.e. compressed APRS&nbsp;434&nbsp;and longer, legacy OE5BPA.
+
+However, it is strongly advised to already install [**the accompanying APRS&nbsp;434 i-gate**](https://github.com/aprs434/lora.igate) as new releases will be automatically pulled over‑the‑air (OTA) via WiFi.
 
 
 ## Development Road Map
 
 ### Data Link Layer
 
-|tracker<br/>firmware|completed|feature|LoRa payload|compatible with [OE5BPA i‑gate](https://github.com/lora-aprs/LoRa_APRS_iGate)|
-|:------------------:|:-------:|:-----:|:----------:|:--------------------------------------------------------------------------------:|
+|tracker<br/>firmware|completed|feature|LoRa payload|compatible with OE5BPA i‑gate|
+|:------------------:|:-------:|:-----:|:----------:|:---------------------------:|
 |v0.0|✓|original [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker)|113 bytes|✓|
 |v0.1|✓|byte-saving [`tracker.json`](https://github.com/aprs434/lora.tracker/blob/master/data/tracker.json)|87 bytes|✓|
-|v0.2|✓|fork of the [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker) with significantly less transmitted bytes|44 bytes|✓|
-|v0.3|✓|[Base91](https://en.wikipedia.org/wiki/List_of_numeral_systems#Standard_positional_numeral_systems) compression of the location, course and speed data|31 bytes|✓|
-|||random time jitter between fixed interval packets to avoid repetitive [collisions](https://en.wikipedia.org/wiki/Collision_domain)|30 bytes|✓|
-|||tracker and i-gate with frame address compression,<br/>no custom header in payload|20 bytes|✗|
+|v0.2|✓|fork of the [OE5BPA tracker](https://github.com/lora-aprs/LoRa_APRS_Tracker)<br/>with significantly less transmitted&nbsp;bytes|44 bytes|✓|
+|v0.3|✓|[Base91](https://en.wikipedia.org/wiki/List_of_numeral_systems#Standard_positional_numeral_systems) compression of  location, course&nbsp;and speed&nbsp;data|31 bytes|✓|
+|v0.4||removal of the transmitted [newline](https://en.wikipedia.org/wiki/Newline) `\n`&nbsp;character at&nbsp;frame&nbsp;end|30 bytes|✓|
+|||random time jitter between fixed interval packets to&nbsp;avoid repetitive&nbsp;[collisions](https://en.wikipedia.org/wiki/Collision_domain)|30 bytes|✓|
+|||[tracker](https://github.com/aprs434/lora.tracker) and [i-gate](https://github.com/aprs434/lora.igate) with frame&nbsp;address&nbsp;compression,<br/>no custom&nbsp;header in&nbsp;payload|20 bytes|✗|
 
-⚠ Currently, the APRS&nbsp;434 tracker is still compatible with the [i-gate developed by Peter Buchegger, OE5BPA](https://github.com/lora-aprs/LoRa_APRS_iGate). However, this will soon change as more LoRa frame compression is added.
-We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, an i‑gate capable of understanding both formats (APRS&nbsp;434&nbsp;and OE5BPA) will be developed.
+Currently, the APRS&nbsp;434 tracker is still compatible with the i-gate developed by Peter Buchegger, OE5BPA. However, this will soon change as more LoRa frame compression is added.
+
+We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, we are developing an i‑gate capable of understanding both formats; i.e. compressed APRS&nbsp;434&nbsp;and longer, legacy OE5BPA.
+
+However, it is strongly advised to already install [**the accompanying APRS&nbsp;434 i-gate**](https://github.com/aprs434/lora.igate) as new releases will be automatically pulled over‑the‑air (OTA) via WiFi.
+
 
 ### Tracker Hardware
 
