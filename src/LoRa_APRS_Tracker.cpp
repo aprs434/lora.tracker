@@ -294,7 +294,7 @@ void loop() {
     show_display(BeaconMan.getCurrentBeaconConfig()->callsign, createDateString(now()) + " " + createTimeString(now()),
                  String("Next TX:   ") + (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active ? "~" : "") + createTimeString(nextBeaconTimeStamp),
                  String("Sats: ") + gps.satellites.value() + " HDOP: " + gps.hdop.hdop(),
-                 String("") + gps.location.lat() + " " + gps.location.lng(),
+                 String(gps.location.lat(), 4) + " " + String(gps.location.lng(), 4),
                  String("Smart Beacon: " + getSmartBeaconState()));
 
     if (BeaconMan.getCurrentBeaconConfig()->smart_beacon.active) {
