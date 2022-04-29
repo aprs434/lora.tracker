@@ -50,7 +50,7 @@ Currently, the APRS&nbsp;434 tracker is still compatible with the i-gate develop
 
 We feel confident that trackers with the proposed APRS&nbsp;434 compressed LoRa frame will eventually become dominant because of the longer range merit. To smooth out the transition, we are developing an i‑gate capable of understanding both formats; i.e. compressed APRS&nbsp;434&nbsp;and longer, legacy OE5BPA.
 
-However, it is strongly advised to already install [**the accompanying APRS&nbsp;434 i-gate**](https://github.com/aprs434/lora.igate) as new releases will be automatically pulled over‑the‑air (OTA) via WiFi.
+It is strongly advised to install [**the accompanying APRS&nbsp;434 i-gate**](https://github.com/aprs434/lora.igate) as new releases will be automatically pulled over‑the‑air (OTA) via WiFi.
 
 
 ## Development Road Map
